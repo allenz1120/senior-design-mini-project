@@ -32,9 +32,10 @@ export default function HomeScreen(props) {
     setScanned(true);
     setBarcodeType(type);
     setBarcodeValue(data);
+    console.log(data);
     console.log(barcodeValue);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    retrieveResult(barcodeValue);
+    retrieveResult(data);
   };
 
   if (hasPermission === null) {
