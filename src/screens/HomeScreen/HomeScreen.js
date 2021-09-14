@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert, TouchableNativeFeedbackBase } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
 import * as firebase from 'firebase'
@@ -41,6 +41,8 @@ export default function HomeScreen(props) {
   const [scanned, setScanned] = useState(false);
   const [barcodeType, setBarcodeType] = useState(null);
   const [barcodeValue, setBarcodeValue] = useState(null);
+  const [itemName, setItemName] = useState(null);
+  const [calorieCount, setCalorieCount] = useState(0);
 
   const [promptForServings, setPromptForServings] = useState(false);
   const [servings, setServings] = useState(1);
@@ -52,13 +54,16 @@ export default function HomeScreen(props) {
     })();
   }, []);
 
-  async function uploadDb() {
+  async function uploadDb(barcode, item, calories) {
+    console.log(item);
+    console.log(calories);
     const dbh = firebase.firestore();
 
-    dbh.collection("scannedFood").doc("12321").set({
-      barcode:"1231212",
-      calorieCount: "1002",
-      itemName:"Pudding"
+    dbh.collection("scannedFood").doc(barcode).set({
+      itemName: item,
+      calorieCount: calories,
+      servings: servings
+      
 })
   }
   const retrieveResult = (barcode) => {
@@ -67,6 +72,11 @@ export default function HomeScreen(props) {
     axios.get(requestUri)
             .then(response => {
               console.log(response);
+              setItemName(response.data.foods[0].description);
+              setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
+              item = response.data.foods[0].description;
+              calories = response.data.foods[0].foodNutrients[3].value;
+              uploadDb(barcode, item, calories);
             })
             .catch(error => {
               console.log(error);
@@ -77,12 +87,11 @@ export default function HomeScreen(props) {
     setScanned(true);
     setPromptForServings(true);
     setBarcodeType(type);
-    //add this line for IOS
-    data = data.substring(1)
+    // uncomment the line below for IOS
+    // data = data.substring(1)
     setBarcodeValue(data);
     console.log(data);
     console.log(barcodeValue);
-    uploadDb();
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     retrieveResult(data);
   };
