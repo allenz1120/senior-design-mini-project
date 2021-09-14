@@ -27,16 +27,16 @@ const firebaseConfig = {
 
 try {
   firebase.initializeApp(firebaseConfig)
-  } catch (err) {
+} catch (err) {
   // we skip the "already exists" message which is
   // not an actual error when we're hot-reloading
   if (!/already exists/.test(err.message)) {
-  console.error('Firebase initialization error', err.stack)
+    console.error('Firebase initialization error', err.stack)
   }
-  }
+}
 
 
-export default function HomeScreen(props) {
+export default function HomeScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcodeType, setBarcodeType] = useState(null);
@@ -63,24 +63,24 @@ export default function HomeScreen(props) {
       itemName: item,
       calorieCount: calories,
       servings: servings
-      
-})
+
+    })
   }
   const retrieveResult = (barcode) => {
     var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=" + barcode + "&dataType=Branded";
     console.log(requestUri);
     axios.get(requestUri)
-            .then(response => {
-              console.log(response);
-              setItemName(response.data.foods[0].description);
-              setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
-              item = response.data.foods[0].description;
-              calories = response.data.foods[0].foodNutrients[3].value;
-              uploadDb(barcode, item, calories);
-            })
-            .catch(error => {
-              console.log(error);
-            })
+      .then(response => {
+        console.log(response);
+        setItemName(response.data.foods[0].description);
+        setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
+        item = response.data.foods[0].description;
+        calories = response.data.foods[0].foodNutrients[3].value;
+        uploadDb(barcode, item, calories);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -88,7 +88,7 @@ export default function HomeScreen(props) {
     setPromptForServings(true);
     setBarcodeType(type);
     // uncomment the line below for IOS
-    // data = data.substring(1)
+    data = data.substring(1)
     setBarcodeValue(data);
     console.log(data);
     console.log(barcodeValue);
@@ -118,7 +118,8 @@ export default function HomeScreen(props) {
           text: "2",
           onPress: () => setServings(2),
         },
-        { text: "3", 
+        {
+          text: "3",
           onPress: () => setServings(3),
         }
       ]
@@ -139,14 +140,15 @@ export default function HomeScreen(props) {
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       {promptForServings && <Button title={'Choose Servings'} onPress={createAlert} />}
-    </View>    
+      <Button title={'Results'} onPress={() => navigation.navigate('Results')} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+});
