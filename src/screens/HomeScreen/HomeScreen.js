@@ -54,17 +54,23 @@ export default function HomeScreen({ navigation }) {
     })();
   }, []);
 
-  async function uploadDb(barcode, item, calories) {
+  async function uploadDb(barcode, item, calories, protein, fat, carbs) {
     console.log(item);
     console.log(calories);
+    console.log(protein);
+    console.log(fat);
+    console.log(carbs);
     const dbh = firebase.firestore();
 
     dbh.collection("scannedFood").doc(barcode).set({
       itemName: item,
       calorieCount: calories,
-      servings: servings
-
-    })
+      proteinCount: protein,
+      fatCount: fat,
+      carbsCount: carbs,
+      servingsCount: servings
+      
+})
   }
   const retrieveResult = (barcode) => {
     var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=" + barcode + "&dataType=Branded";
@@ -75,8 +81,11 @@ export default function HomeScreen({ navigation }) {
         setItemName(response.data.foods[0].description);
         setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
         item = response.data.foods[0].description;
+        protein = response.data.foods[0].foodNutrients[0].value;
+        fat = response.data.foods[0].foodNutrients[1].value;
+        carbs = response.data.foods[0].foodNutrients[2].value;
         calories = response.data.foods[0].foodNutrients[3].value;
-        uploadDb(barcode, item, calories);
+        uploadDb(barcode, item, calories, protein, fat, carbs);
       })
       .catch(error => {
         console.log(error);
