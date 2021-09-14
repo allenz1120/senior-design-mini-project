@@ -54,15 +54,21 @@ export default function HomeScreen(props) {
     })();
   }, []);
 
-  async function uploadDb(barcode, item, calories) {
+  async function uploadDb(barcode, item, calories, protein, fat, carbs) {
     console.log(item);
     console.log(calories);
+    console.log(protein);
+    console.log(fat);
+    console.log(carbs);
     const dbh = firebase.firestore();
 
     dbh.collection("scannedFood").doc(barcode).set({
       itemName: item,
       calorieCount: calories,
-      servings: servings
+      proteinCount: protein,
+      fatCount: fat,
+      carbsCount: carbs,
+      servingsCount: servings
       
 })
   }
@@ -75,8 +81,11 @@ export default function HomeScreen(props) {
               setItemName(response.data.foods[0].description);
               setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
               item = response.data.foods[0].description;
+              protein = response.data.foods[0].foodNutrients[0].value;
+              fat = response.data.foods[0].foodNutrients[1].value;
+              carbs = response.data.foods[0].foodNutrients[2].value;
               calories = response.data.foods[0].foodNutrients[3].value;
-              uploadDb(barcode, item, calories);
+              uploadDb(barcode, item, calories, protein, fat, carbs);
             })
             .catch(error => {
               console.log(error);
