@@ -80,11 +80,12 @@ export default function HomeScreen({ navigation }) {
         console.log(response);
         setItemName(response.data.foods[0].description);
         setCalorieCount(response.data.foods[0].foodNutrients[3].value); // TODO change to grab by name
-        item = response.data.foods[0].description;
-        protein = response.data.foods[0].foodNutrients[0].value;
-        fat = response.data.foods[0].foodNutrients[1].value;
-        carbs = response.data.foods[0].foodNutrients[2].value;
-        calories = response.data.foods[0].foodNutrients[3].value;
+        console.log("Parsed values");
+        var item = response.data.foods[0].description;
+        var protein = response.data.foods[0].foodNutrients[0].value;
+        var fat = response.data.foods[0].foodNutrients[1].value;
+        var carbs = response.data.foods[0].foodNutrients[2].value;
+        var calories = response.data.foods[0].foodNutrients[3].value;
         uploadDb(barcode, item, calories, protein, fat, carbs);
       })
       .catch(error => {
@@ -97,7 +98,7 @@ export default function HomeScreen({ navigation }) {
     setPromptForServings(true);
     setBarcodeType(type);
     // uncomment the line below for IOS
-    data = data.substring(1)
+    // data = data.substring(1)
     setBarcodeValue(data);
     console.log(data);
     console.log(barcodeValue);

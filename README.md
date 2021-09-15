@@ -22,3 +22,6 @@ POST: XXXXXX
 ## Dependencies
 Node (tested with version 14.17.3)
 npm (tested with 6.14.13)
+
+## Issues
+You may run into an error when downloading the app through the expo app says there are two conflicting views. To fix this, run ```npm uninstall firebase``` then ```expo install firebase```.
