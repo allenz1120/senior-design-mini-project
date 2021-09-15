@@ -1,6 +1,7 @@
-import { LineChart } from "react-native-chart-kit";
+import { LineChart, BarChart } from "react-native-chart-kit";
 import { Text, View, Button } from 'react-native';
-import React from 'react'
+// import { React, useState } from 'react';
+import React, { useState } from 'react';
 import * as firebase from 'firebase'
 import 'firebase/firestore';
 import { useEffect } from "react/cjs/react.development";
@@ -37,11 +38,35 @@ try {
 
 
 export default function ResultsScreen() {
+    const [macroData, setMacroData] = useState([
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+    ]);
+
+    var calorieTotal = 0;
+    var proteinTotal = 0;
+    var fatTotal = 0;
+    var carbsTotal = 0;
+
     async function getMarker() {
-        console.log("INSIDE GETMARKER")
         const snapshot = await firebase.firestore().collection('scannedFood').get()
         return snapshot.docs.map(doc => {
             doc.data()
+            if (doc.data().calorieCount) {
+                calorieTotal = calorieTotal + doc.data().calorieCount;
+                proteinTotal = proteinTotal + doc.data().proteinCount;
+                fatTotal = fatTotal + doc.data().fatCount;
+                carbsTotal = carbsTotal + doc.data().carbsCount;
+            }
+            setMacroData([
+                calorieTotal,
+                proteinTotal,
+                fatTotal,
+                carbsTotal
+            ])
+            console.log(calorieTotal);
             console.log(doc.data())
         });
     }
@@ -52,57 +77,51 @@ export default function ResultsScreen() {
         })
     })
     return (
-        <View>
-            <Text>
-                Helloworld
-            </Text>
-            <Button title={'Tap to Scan Again'} onPress={() => getMarker()} />
-        </View>
-        //     <View>
-        //         <Text>Bezier Line Chart</Text>
-        //         <LineChart
-        //             data={{
-        //                 labels: ["January", "February", "March", "April", "May", "June"],
-        //                 datasets: [
-        //                     {
-        //                         data: [
-        //                             Math.random() * 100,
-        //                             Math.random() * 100,
-        //                             Math.random() * 100,
-        //                             Math.random() * 100,
-        //                             Math.random() * 100,
-        //                             Math.random() * 100
-        //                         ]
-        //                     }
-        //                 ]
-        //             }}
-        //             width={350} // from react-native
-        //             height={200}
-        //             yAxisLabel="$"
-        //             yAxisSuffix="k"
-        //             yAxisInterval={1} // optional, defaults to 1
-        //             chartConfig={{
-        //                 backgroundColor: "#e26a00",
-        //                 backgroundGradientFrom: "#fb8c00",
-        //                 backgroundGradientTo: "#ffa726",
-        //                 decimalPlaces: 2, // optional, defaults to 2dp
-        //                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        //                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        //                 style: {
-        //                     borderRadius: 16
-        //                 },
-        //                 propsForDots: {
-        //                     r: "6",
-        //                     strokeWidth: "2",
-        //                     stroke: "#ffa726"
-        //                 }
-        //             }}
-        //             bezier
-        //             style={{
-        //                 marginVertical: 8,
-        //                 borderRadius: 16
-        //             }}
-        //         />
-        //     </View>
+        // <View>
+        //     <Text>
+        //         Helloworld
+        //     </Text>
+        //     <Button title={'Tap to Scan Again'} onPress={() => getMarker()} />
+        // </View>
+            <View>
+                <Button title={'Get latest data'} onPress={() => getMarker()} />
+                <Text>Macros</Text>
+                <BarChart
+                    data={{
+                        labels: ["Calories", "Protein", "Fat", "Carbs"],
+                        datasets: [
+                            {
+                                data: macroData
+                            }
+                        ]
+                    }}
+                    width={350} // from react-native
+                    height={200}
+                    yAxisLabel=""
+                    yAxisSuffix="mg"
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                        backgroundColor: "#e26a00",
+                        backgroundGradientFrom: "#fb8c00",
+                        backgroundGradientTo: "#ffa726",
+                        decimalPlaces: 0, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
+                            borderRadius: 16
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "2",
+                            stroke: "#ffa726"
+                        }
+                    }}
+                    bezier
+                    style={{
+                        marginVertical: 8,
+                        borderRadius: 16
+                    }}
+                />
+            </View>
     )
 }
