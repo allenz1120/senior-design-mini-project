@@ -51,7 +51,7 @@ export default function ResultsScreen() {
     var fatTotal = 0;
     var carbsTotal = 0;
 
-    async function getMarker() {
+    async function getPastFoods() {
         const snapshot = await firebase.firestore().collection('scannedFood').get()
         return snapshot.docs.map(doc => {
             doc.data()
@@ -74,18 +74,12 @@ export default function ResultsScreen() {
 
     useEffect(() => {
         (async () => {
-            getMarker();
+            getPastFoods();
         })
     })
     return (
-        // <View>
-        //     <Text>
-        //         Helloworld
-        //     </Text>
-        //     <Button title={'Tap to Scan Again'} onPress={() => getMarker()} />
-        // </View>
         <View>
-            <Button title={'Get latest data'} onPress={() => getMarker()} />
+            <Button title={'Get latest data'} onPress={() => getPastFoods()} />
             <Text style={styles.Text}>Macros</Text>
             <BarChart
                 data={{
@@ -124,10 +118,10 @@ export default function ResultsScreen() {
                 }}
             />
             <Text style={styles.Text}>
-                Calories:{macroData[0]} mg
-                {'\n'}Protein:{macroData[1]} mg
-                {'\n'}Fat:{macroData[2]} mg
-                {'\n'}Carbs:{macroData[3]} mg
+                Calories: {macroData[0]} kCal
+                {'\n'}Protein: {macroData[1]} mg
+                {'\n'}Fat: {macroData[2]} mg
+                {'\n'}Carbs: {macroData[3]} mg
 
             </Text>
         </View>
