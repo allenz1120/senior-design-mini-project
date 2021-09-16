@@ -51,9 +51,11 @@ export default function ResultsScreen() {
     var fatTotal = 0;
     var carbsTotal = 0;
     var servings = 1;
+    var [itemList, updateList] = useState([]);
 
     async function getPastFoods() {
         const snapshot = await firebase.firestore().collection('scannedFood').get()
+        itemList = []
         return snapshot.docs.map(doc => {
             doc.data()
             if (doc.data().calorieCount) {
@@ -62,7 +64,7 @@ export default function ResultsScreen() {
                 proteinTotal = Math.round(proteinTotal + doc.data().proteinCount * servings);
                 fatTotal = Math.round(fatTotal + doc.data().fatCount * servings);
                 carbsTotal = Math.round(carbsTotal + doc.data().carbsCount * servings);
-
+                updateList(itemList += doc.data().itemName)
             }
             setMacroData([
                 calorieTotal,
@@ -70,8 +72,9 @@ export default function ResultsScreen() {
                 fatTotal,
                 carbsTotal
             ])
-            console.log(calorieTotal);
-            console.log(doc.data())
+            // console.log(calorieTotal);
+            // console.log(doc.data())
+            console.log(itemList);
         });
     }
 
@@ -125,6 +128,7 @@ export default function ResultsScreen() {
                 {'\n'}Protein: {macroData[1]} mg
                 {'\n'}Fat: {macroData[2]} mg
                 {'\n'}Carbs: {macroData[3]} mg
+                {'\n'}Items Scanned: {itemList}
             </Text>}
             {!pulledData && <Text style={styles.Text}>Pull Latest Data</Text>}
         </View>
