@@ -69,8 +69,8 @@ export default function HomeScreen({ navigation }) {
       fatCount: fat,
       carbsCount: carbs,
       servingsCount: servings
-      
-})
+
+    })
   }
   const retrieveResult = (barcode) => {
     var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=" + barcode + "&dataType=Branded";
@@ -148,9 +148,9 @@ export default function HomeScreen({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {scanned && <Button title={'Tap to Scan'} onPress={() => setScanned(false)} />}
       {promptForServings && <Button title={'Choose Servings'} onPress={createAlert} />}
-      <Button title={'Results'} onPress={() => navigation.navigate('Results')} />
+      {scanned && <Button title={'Results'} onPress={() => navigation.navigate('Results')} />}
     </View>
   );
 }

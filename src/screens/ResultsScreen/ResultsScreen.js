@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import * as firebase from 'firebase'
 import 'firebase/firestore';
 import { useEffect } from "react/cjs/react.development";
+import styles from './styles';
 
 const firebaseConfig = {
 
@@ -83,45 +84,52 @@ export default function ResultsScreen() {
         //     </Text>
         //     <Button title={'Tap to Scan Again'} onPress={() => getMarker()} />
         // </View>
-            <View>
-                <Button title={'Get latest data'} onPress={() => getMarker()} />
-                <Text>Macros</Text>
-                <BarChart
-                    data={{
-                        labels: ["Calories", "Protein", "Fat", "Carbs"],
-                        datasets: [
-                            {
-                                data: macroData
-                            }
-                        ]
-                    }}
-                    width={350} // from react-native
-                    height={200}
-                    yAxisLabel=""
-                    yAxisSuffix="mg"
-                    yAxisInterval={1} // optional, defaults to 1
-                    chartConfig={{
-                        backgroundColor: "#e26a00",
-                        backgroundGradientFrom: "#fb8c00",
-                        backgroundGradientTo: "#ffa726",
-                        decimalPlaces: 0, // optional, defaults to 2dp
-                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: "#ffa726"
+        <View>
+            <Button title={'Get latest data'} onPress={() => getMarker()} />
+            <Text style={styles.Text}>Macros</Text>
+            <BarChart
+                data={{
+                    labels: ["Calories", "Protein", "Fat", "Carbs"],
+                    datasets: [
+                        {
+                            data: macroData
                         }
-                    }}
-                    bezier
-                    style={{
-                        marginVertical: 8,
+                    ]
+                }}
+                width={350} // from react-native
+                height={200}
+                yAxisLabel=""
+                yAxisSuffix="mg"
+                yAxisInterval={1} // optional, defaults to 1
+                chartConfig={{
+                    backgroundColor: "#e26a00",
+                    backgroundGradientFrom: "#fb8c00",
+                    backgroundGradientTo: "#ffa726",
+                    decimalPlaces: 0, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    style: {
                         borderRadius: 16
-                    }}
-                />
-            </View>
+                    },
+                    propsForDots: {
+                        r: "6",
+                        strokeWidth: "2",
+                        stroke: "#ffa726"
+                    }
+                }}
+                bezier
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                }}
+            />
+            <Text style={styles.Text}>
+                Calories:{macroData[0]} mg
+                {'\n'}Protein:{macroData[1]} mg
+                {'\n'}Fat:{macroData[2]} mg
+                {'\n'}Carbs:{macroData[3]} mg
+
+            </Text>
+        </View>
     )
 }
