@@ -52,14 +52,17 @@ export default function ResultsScreen() {
     var carbsTotal = 0;
 
     async function getMarker() {
+        var servings = 2
         const snapshot = await firebase.firestore().collection('scannedFood').get()
         return snapshot.docs.map(doc => {
             doc.data()
             if (doc.data().calorieCount) {
-                calorieTotal = calorieTotal + doc.data().calorieCount;
-                proteinTotal = proteinTotal + doc.data().proteinCount;
-                fatTotal = fatTotal + doc.data().fatCount;
-                carbsTotal = carbsTotal + doc.data().carbsCount;
+                servings = doc.data().servingsCount;
+                calorieTotal = Math.round(calorieTotal + doc.data().calorieCount * servings);
+                proteinTotal = Math.round(proteinTotal + doc.data().proteinCount * servings);
+                fatTotal = Math.round(fatTotal + doc.data().fatCount * servings);
+                carbsTotal = Math.round(carbsTotal + doc.data().carbsCount * servings);
+
             }
             setMacroData([
                 calorieTotal,
@@ -124,7 +127,7 @@ export default function ResultsScreen() {
                 }}
             />
             <Text style={styles.Text}>
-                Calories:{macroData[0]} mg
+                Calories:{macroData[0]} kCal
                 {'\n'}Protein:{macroData[1]} mg
                 {'\n'}Fat:{macroData[2]} mg
                 {'\n'}Carbs:{macroData[3]} mg

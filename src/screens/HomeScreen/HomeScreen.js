@@ -39,6 +39,7 @@ try {
 export default function HomeScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [servingChosen, setSeringChosen] = useState(false);
   const [barcodeType, setBarcodeType] = useState(null);
   const [barcodeValue, setBarcodeValue] = useState(null);
   const [itemName, setItemName] = useState(null);
@@ -54,7 +55,7 @@ export default function HomeScreen({ navigation }) {
     })();
   }, []);
 
-  async function uploadDb(barcode, item, calories, protein, fat, carbs) {
+  async function uploadDb(barcode, item, calories, protein, fat, carbs,) {
     console.log(item);
     console.log(calories);
     console.log(protein);
@@ -86,7 +87,7 @@ export default function HomeScreen({ navigation }) {
         var fat = response.data.foods[0].foodNutrients[1].value;
         var carbs = response.data.foods[0].foodNutrients[2].value;
         var calories = response.data.foods[0].foodNutrients[3].value;
-        uploadDb(barcode, item, calories, protein, fat, carbs);
+        uploadDb(barcode, item, calories, protein, fat, carbs, servings);
       })
       .catch(error => {
         console.log(error);
@@ -98,7 +99,7 @@ export default function HomeScreen({ navigation }) {
     setPromptForServings(true);
     setBarcodeType(type);
     // uncomment the line below for IOS
-    // data = data.substring(1)
+    data = data.substring(1)
     setBarcodeValue(data);
     console.log(data);
     console.log(barcodeValue);
@@ -122,15 +123,15 @@ export default function HomeScreen({ navigation }) {
       [
         {
           text: "1",
-          onPress: () => setServings(1),
+          onPress: () => { setServings(1), setSeringChosen(true) }
         },
         {
           text: "2",
-          onPress: () => setServings(2),
+          onPress: () => { setServings(2), setSeringChosen(true) }
         },
         {
           text: "3",
-          onPress: () => setServings(3),
+          onPress: () => { setServings(3), setSeringChosen(true) }
         }
       ]
     );
@@ -148,9 +149,9 @@ export default function HomeScreen({ navigation }) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Button title={'Tap to Scan'} onPress={() => setScanned(false)} />}
-      {promptForServings && <Button title={'Choose Servings'} onPress={createAlert} />}
-      {scanned && <Button title={'Results'} onPress={() => navigation.navigate('Results')} />}
+      {servingChosen && <Button title={'Tap to Scan'} onPress={() => setScanned(false)} />}
+      {<Button title={'Choose Servings'} onPress={createAlert} />}
+      {<Button title={'Results'} onPress={() => navigation.navigate('Results')} />}
     </View>
   );
 }
