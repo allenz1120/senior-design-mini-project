@@ -73,7 +73,7 @@ export default function HomeScreen({ navigation }) {
 
     })
   }
-  const retrieveResult = (barcode) => {
+  const postScannedBarcode = (barcode) => {
     var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=" + barcode + "&dataType=Branded";
     console.log(requestUri);
     axios.get(requestUri)
@@ -104,17 +104,8 @@ export default function HomeScreen({ navigation }) {
     console.log(data);
     console.log(barcodeValue);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    retrieveResult(data);
+    postScannedBarcode(data);
   };
-
-  const GetRecipe = () => {
-    // firebase scanned items
-  }
-
-  const PostScannedItem = ({ name, calories }) => {
-    // firebase scanned item
-    // barcode, item name, calories
-  }
 
   const createAlert = () =>
     Alert.alert(
