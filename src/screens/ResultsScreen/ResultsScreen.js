@@ -40,18 +40,15 @@ try {
 
 export default function ResultsScreen() {
     const [macroData, setMacroData] = useState([
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
+        0, 0, 0, 0
     ]);
-
+    const [pulledData, setPulledData] = useState(false);
     var calorieTotal = 0;
     var proteinTotal = 0;
     var fatTotal = 0;
     var carbsTotal = 0;
     var servings = 1;
-    
+
     async function getPastFoods() {
         const snapshot = await firebase.firestore().collection('scannedFood').get()
         return snapshot.docs.map(doc => {
@@ -82,7 +79,7 @@ export default function ResultsScreen() {
     })
     return (
         <View>
-            <Button title={'Get latest data'} onPress={() => getPastFoods()} />
+            <Button title={'Get latest data'} onPress={() => { getPastFoods(); setPulledData(true) }} />
             <Text style={styles.Text}>Macros</Text>
             <BarChart
                 data={{
@@ -120,12 +117,13 @@ export default function ResultsScreen() {
                     borderRadius: 16
                 }}
             />
-            <Text style={styles.Text}>
+            {pulledData && <Text style={styles.Text}>
                 Calories: {macroData[0]} kCal
                 {'\n'}Protein: {macroData[1]} mg
                 {'\n'}Fat: {macroData[2]} mg
                 {'\n'}Carbs: {macroData[3]} mg
-            </Text>
+            </Text>}
+            {!pulledData && <Text style={styles.Text}>Pull Latest Data</Text>}
         </View>
     )
 }
