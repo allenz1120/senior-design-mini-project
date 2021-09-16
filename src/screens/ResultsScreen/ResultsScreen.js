@@ -6,6 +6,9 @@ import * as firebase from 'firebase'
 import 'firebase/firestore';
 import { useEffect } from "react/cjs/react.development";
 import styles from './styles';
+import { Dimensions } from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
 
 const firebaseConfig = {
 
@@ -90,7 +93,7 @@ export default function ResultsScreen() {
                         }
                     ]
                 }}
-                width={350} // from react-native
+                width={screenWidth}
                 height={200}
                 yAxisLabel=""
                 yAxisSuffix="mg"
@@ -114,7 +117,7 @@ export default function ResultsScreen() {
                 bezier
                 style={{
                     marginVertical: 8,
-                    borderRadius: 16
+                    borderRadius: 16,
                 }}
             />
             {pulledData && <Text style={styles.Text}>
