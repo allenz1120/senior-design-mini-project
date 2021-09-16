@@ -15,9 +15,11 @@ Run ```expo start -c``` to build the project
 ## API
 This calorie counter is built on Firebase. We use Firestore to store data from the scanned barcodes. The frontend encapsulates some API functionality to work with the data within Firebase.
 
-GET: XXXXXX
+GET PAST SCANNED FOODS: getPastScannedFoods
+ - getPastScannedFoods will retrieve all previous barcodes scanned and update a bar graph showing selected macros.
 
-POST: XXXXXX
+POST SCANNED BARCODE: postScannedBarcode
+ - postScannedBarcode will add the food item scanned to the firebase database with selected macros and serving size.
 
 ## Dependencies
 Node (tested with version 14.17.3)
