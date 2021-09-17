@@ -10,9 +10,11 @@ export default function LoginScreen({navigation}) {
     async function signInWithGoogleAsync() {
         try {
           const result = await Google.logInAsync({
-            androidClientId: '293213095726-su3o0t6c6t2irst7k9bj722uh7co8rf4.apps.googleusercontent.com',
+            // Replace ANDROID_CLIENT_ID with android client id
+            androidClientId: 'ANDROID_CLIENT_ID',
             // behavior:'web',
-            iosClientId: '293213095726-oacojpdlnpq1obdk52ba9to5ccaiseqi.apps.googleusercontent.com',
+            // Replace IOS_CLIENT_ID with ios client id
+            iosClientId: 'IOS_CLIENT_ID',
             scopes: ['profile', 'email'],
           });
       
