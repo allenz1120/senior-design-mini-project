@@ -7,19 +7,26 @@ import 'firebase/firestore';
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyA1upfgKqCXxVxaXGBHCt3zPXHb3NjKL9w",
+  // Replace API_KEY with firebase api key
+  apiKey: "API_KEY",
 
-  authDomain: "senior-design-mini-proje-c95b5.firebaseapp.com",
+  // Replace AUTH_DOMAIN with firebase domain
+  authDomain: "AUTH_DOMAIN",
 
-  databaseURL: "https://senior-design-mini-proje-c95b5-default-rtdb.firebaseio.com",
+  // Replace DATABASE_URL with database url
+  databaseURL: "DATABASE_URL",
 
-  projectId: "senior-design-mini-proje-c95b5",
+  // Replace PROJECT_ID with project id
+  projectId: "PROJECT_ID",
 
-  storageBucket: "senior-design-mini-proje-c95b5.appspot.com",
+  // Replace STORAGE_BUCKET with storage bucket
+  storageBucket: "STORAGE_BUCKET",
 
-  messagingSenderId: "503443879304",
+  // Replace MESSAGING_SENDER_ID with messaging sender id
+  messagingSenderId: "MESSAGING_SENDER_ID",
 
-  appId: "1:503443879304:web:f11c62f2888ae75e35f63d",
+  // Replace APP_ID with application id
+  appId: "APP_ID",
 
   measurementId: "G-17PKYZDMTN"
 
@@ -73,7 +80,8 @@ export default function HomeScreen({ navigation }) {
 })
   }
   const retrieveResult = (barcode) => {
-    var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=" + barcode + "&dataType=Branded";
+    // Replace API_KEY with FDC ID API key
+    var requestUri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=API_KEY&query=" + barcode + "&dataType=Branded";
     console.log(requestUri);
     axios.get(requestUri)
       .then(response => {
