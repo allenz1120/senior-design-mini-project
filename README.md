@@ -6,7 +6,7 @@ Macro Manager is an application that will let you scan the barcodes of food item
 ## How to Build
 The application was developed using React-native and Firebase, and makes calls to the FDA API. In order to locally build the application, you need a Firebase database and an FDA API key (obtained here: https://fdc.nal.usda.gov/api-key-signup.html). Once you have a Firebase database, populate the following with your Firebase details.
 
-```src/screens/LoginScreen.js```
+```src/screens/LoginScreen.js```:
 ```
 13            // Replace ANDROID_CLIENT_ID with android client id
 14            androidClientId: 'ANDROID_CLIENT_ID',
@@ -15,7 +15,7 @@ The application was developed using React-native and Firebase, and makes calls t
 17            iosClientId: 'IOS_CLIENT_ID',
 ```
 
-```src/screens/HomeScreen.js```
+```src/screens/HomeScreen.js```:
 ```
 9             const firebaseConfig = {
 10
@@ -45,7 +45,7 @@ The application was developed using React-native and Firebase, and makes calls t
 34            };
 ```
 
-```src/screens/ResultsScreen.js```
+```src/screens/ResultsScreen.js```:
 ```
 9             const firebaseConfig = {
 10
@@ -87,8 +87,6 @@ In order to compile the calorie counter project, all dependencies need to be ins
  - Run ```npm install``` to install all libraries and code dependencies
  - Run ```expo start -c``` to build the project
 	 - This should then launch a window where you can scan the expo QR code with the expo app on your phone
-
-## Source Code
 
 ## API
 This calorie counter is built on Firebase. We use Firestore to store data from the scanned barcodes. The frontend encapsulates some API functionality to work with the data within Firebase.
