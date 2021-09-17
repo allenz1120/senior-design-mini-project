@@ -1,5 +1,5 @@
-## Senior Design Mini Project: Macro Manager
-# Benjamin Li, Allen Zou
+# Senior Design Mini Project: Macro Manager
+## Benjamin Li, Allen Zou
 
 Macro Manager is an application that will let you scan the barcodes of food items and will provide a visual representation of the macros you have consumed. Users are required to login using gmail.
 
