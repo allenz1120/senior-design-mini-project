@@ -88,6 +88,9 @@ In order to compile the calorie counter project, all dependencies need to be ins
  - Run ```expo start -c``` to build the project
 	 - This should then launch a window where you can scan the expo QR code with the expo app on your phone
 
+## Authentication
+Authentication for Macro Manager is done through oAuth by Google API. This desgin choice was made for increase security and ease of deployment. By using Google's API, we do not store user passwords on our Firebase database and have a prebuilt login screen for users to use
+
 ## API
 This calorie counter is built on Firebase. We use Firestore to store data from the scanned barcodes. The frontend encapsulates some API functionality to work with the data within Firebase.
 
@@ -96,6 +99,11 @@ GET PAST SCANNED FOODS: getPastScannedFoods
 
 POST SCANNED BARCODE: postScannedBarcode
  - postScannedBarcode will add the food item scanned to the firebase database with selected macros and serving size.
+
+## Database
+Each scanned item becomes a document in the firebase collection called "scannedFood". The document ID is the UPC barcode of the item and it is populated with the macros listed below. 
+![image](https://user-images.githubusercontent.com/55994268/133818351-dbebf316-db97-4f92-ba3b-9a12f4c7d31d.png)
+
 
 ## Dependencies
 Node (tested with version 14.17.3)
