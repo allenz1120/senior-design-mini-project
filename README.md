@@ -15,37 +15,7 @@ The application was developed using React-native and Firebase, and makes calls t
 17            iosClientId: 'IOS_CLIENT_ID',
 ```
 
-```src/screens/HomeScreen.js```:
-```
-9             const firebaseConfig = {
-10
-11               // Replace API_KEY with firebase api key
-12               apiKey: "API_KEY",
-13
-14               // Replace AUTH_DOMAIN with firebase domain
-15               authDomain: "AUTH_DOMAIN",
-16
-17               // Replace DATABASE_URL with database url
-18               databaseURL: "DATABASE_URL",
-19
-20               // Replace PROJECT_ID with project id
-21               projectId: "PROJECT_ID",
-22
-23               // Replace STORAGE_BUCKET with storage bucket
-24               storageBucket: "STORAGE_BUCKET",
-25
-26               // Replace MESSAGING_SENDER_ID with messaging sender id
-27               messagingSenderId: "MESSAGING_SENDER_ID",
-28
-29               // Replace APP_ID with application id
-30               appId: "APP_ID",
-31
-32               measurementId: "G-17PKYZDMTN"
-33
-34            };
-```
-
-```src/screens/ResultsScreen.js```:
+```src/screens/HomeScreen.js and src/screens/ResultsScreen.js```:
 ```
 9             const firebaseConfig = {
 10
